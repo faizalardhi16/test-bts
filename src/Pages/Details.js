@@ -44,7 +44,43 @@ function Details(props) {
     }
   };
 
-  const handleUpdate = async () => {};
+  const handleUpdate = () => {
+    setFormData({
+      itemName: data.name,
+    });
+  };
+
+  const statusUpdate = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      };
+    } catch (error) {}
+  };
+  const handleUpdates = async (e) => {
+    e.preventDefault();
+    try {
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      };
+
+      const body = JSON.stringify({
+        checklistId: 0,
+        itemName: form.itemName,
+      });
+
+      await API.put(`/item/rename/${id}`, body, config);
+
+      alert("Data Berhasil Diubah");
+      loadData();
+    } catch (error) {}
+  };
 
   useEffect(() => {
     loadData();
@@ -78,7 +114,7 @@ function Details(props) {
 
           <Grid xs={12} sm={4} style={{ margin: 10 }}>
             <Paper style={{ padding: 20 }}>
-              <form onSubmit={(e) => handleUpdate(e)} autoComplete="off">
+              <form onSubmit={(e) => handleUpdates(e)} autoComplete="off">
                 <Grid
                   style={{
                     display: "flex",
@@ -97,7 +133,7 @@ function Details(props) {
                         setFormData({ ...form, itemName: e.target.value })
                       }
                       style={{ width: 360 }}
-                      label="itemName"
+                      label="Item Name"
                     />
                   </Grid>
 
